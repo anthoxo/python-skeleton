@@ -1,10 +1,11 @@
 # ONLY EDIT FUNCTIONS MARKED CLEARLY FOR EDITING
 
-import numpy as np
-
 #compute all combinations for two portfolios
 def question04(rows, numberMachines):
-  # modify and then return the variable below
   answer = -1
-  return answer
-
+  result = []
+  for tab in rows:
+    for i in range(0, len(tab)-numberMachines):
+      if ('X' not in tab[i:i+numberMachines]):
+        result += [sum(tab[i:i+numberMachines])]
+  return 0 if result == [] else min(result)
