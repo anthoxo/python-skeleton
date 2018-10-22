@@ -1,14 +1,4 @@
 # ONLY EDIT FUNCTIONS MARKED CLEARLY FOR EDITING
-from time import time
-from random import randint
-
-def checkModulo(n, tab):
-  for i in tab:
-    if (n//i > 5):
-      return -1
-    if (n%i == 0):
-      return i
-  return -1
 
 def question05(allowedAllocations, totalValue):
   # modify and then return the variable below
@@ -30,3 +20,11 @@ def question05(allowedAllocations, totalValue):
     if (n == sum(resultTmp) and (len(resultTmp) < answer or answer == -1)):
       answer = len(resultTmp)
   return answer
+
+def checkModulo(n, tab):
+  for i in tab:
+    if (n//i > 5):
+      return -1
+    if (n%i == 0):
+      return i
+  return -1
