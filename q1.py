@@ -1,21 +1,21 @@
 # ONLY EDIT FUNCTIONS MARKED CLEARLY FOR EDITING
+def findBit(n):
+  return sum([1 for i in range(16) if n - 2**i >= 0])-1
 
-
-def splitTab(portfolios):
+def splitTab(portfolios, bitFort):
   tri = sorted(portfolios, reverse = True)
-  maxElt = tri[0]
-  maxList = []
-  minList = []
-  try:
-      indBitFort = bitfield(maxElt).index(1)
-  # que des 0 dans bitfield(maxElt) --> que des 0 dans portfolios --> return 0
-  except:
-      return [],[]
-  for elt in tri:
-    if 1 in bitfield(elt) and bitfield(elt).index(1) == indBitFort:
-      maxList.append(elt)
+  t = True
+  maxList, minList = [],[]
+  while(t):
+    if (len(tri) > 0):
+      if (tri[0] - 2**bitFort >= 0):
+        maxList += [tri[0]]
+        tri = tri[1:]
+      else:
+        t = False
     else:
-      minList.append(elt)
+      t = False
+  minList = tri
   return maxList, minList
 
 # modify this function, and create other functions below as you wish
@@ -26,43 +26,18 @@ def question01(portfolios):
     return answer
   if min(portfolios) == max(portfolios):
     return 0
-  maxList, minList = splitTab(portfolios)
+  bitFort = findBit(max(portfolios))
+  maxList, minList = splitTab(portfolios, bitFort)
+  while minList == [] and max(maxList) != 0:
+    newMaxList = [i - 2**bitFort for i in maxList]
+    bitFort -= 1
+    maxList, minList = splitTab(newMaxList, bitFort)
   if maxList == [] and minList == []:
     return 0
-  
-  while minList == [] and max(maxList) != 0:
-    indBitFort = bitfield(maxList[0]).index(1)
-    for i in range(len(portfolios)):
-      if portfolios[i] in maxList:
-        portfolios[i] -= 2**(16-(indBitFort+1))
-    maxList, minList = splitTab(portfolios)
-    if maxList == [] and minList == []:
-      answer = 0
-      return answer
 
   for n1 in maxList:
     for n2 in minList:
-      X1 = bitfield(n1)
-      X2 = bitfield(n2)
-      C = [X1[k] ^ X2[k] for k in range(16)]
-      answer = max(answer, intfield(C))
+      answer = max(answer, n1 ^ n2)
   return answer
-
-def bitfield(n):
-  X = [1 if digit=='1' else 0 for digit in bin(n)[2:]]
-  Y = [0 for m in range(16-len(X))]
-  return Y + X
-
-# intfield([0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1]) = 15
-def intfield(L):
-  counter = 0
-  for l in range(16):
-    counter += L[15-l] * 2**l
-  return counter
-
-print(question01([i for i in range(1,10)]))
-  
-  # que des 0 dans bitfield(maxElt) --> que des 0 dans portfolios --> return 0
-
   
           
