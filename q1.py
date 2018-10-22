@@ -35,8 +35,6 @@ def question01(portfolios):
     maxList, minList = splitTab(newMaxList, bitFort)
   if maxList == [] and minList == []:
     return 0
-
-  for n1 in maxList:
-    for n2 in minList:
-      answer = max(answer, n1 ^ n2)
+  
+  answer = max([n1 ^ n2 for n1 in maxList for n2 in minList])
   return answer
