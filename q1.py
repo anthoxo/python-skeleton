@@ -39,6 +39,4 @@ def question01(portfolios):
   for n1 in maxList:
     for n2 in minList:
       answer = max(answer, n1 ^ n2)
-  return answer          
-
-print(question01([i for i in range(20)]))
+  return answer
