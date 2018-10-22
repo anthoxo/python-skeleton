@@ -1,16 +1,32 @@
 # ONLY EDIT FUNCTIONS MARKED CLEARLY FOR EDITING
+from time import time
+from random import randint
 
-def rec_foundsum(n, tab, aux):
-  result = []
-  if (n == 0):
-    return [aux]
-  for i in range(len(tab)):
-    if (tab[i] <= n):
-      result += rec_foundsum(n-tab[i], tab, aux + 1)
-  return result
-        
+def checkModulo(n, tab):
+  for i in tab:
+    if (n//i > 5):
+      return -1
+    if (n%i == 0):
+      return i
+  return -1
 
 def question05(allowedAllocations, totalValue):
   # modify and then return the variable below
-  result = rec_foundsum(totalValue, allowedAllocations, 0)
-  return min(result)
+  l = sorted(allowedAllocations, reverse=True)
+  n = int(totalValue)
+  answer = -1
+  for i in range(len(l)):
+    j = i
+    resultTmp = [l[j]]
+    while (j < len(l)) and (sum(resultTmp) < n):
+      checkMod = checkModulo(n - sum(resultTmp), l)
+      if (checkMod != -1):
+        if (answer == -1 or answer > len(resultTmp)+(n - sum(resultTmp))//checkMod):
+          answer = len(resultTmp)+(n - sum(resultTmp))//checkMod
+      if sum(resultTmp) + l[j] <= n:
+        resultTmp += [l[j]]
+      else:
+        j+=1
+    if (n == sum(resultTmp) and (len(resultTmp) < answer or answer == -1)):
+      answer = len(resultTmp)
+  return answer
