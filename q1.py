@@ -22,8 +22,9 @@ def splitTab(portfolios, bitFort):
 def question01(portfolios):
   # modify and then return the variable below
   answer = 0
+  portfolios = list(portfolios)
   if (len(portfolios) < 2):
-    return -1
+    return 0
   if min(portfolios) == max(portfolios):
     return 0
   bitFort = findBit(max(portfolios))
@@ -39,3 +40,5 @@ def question01(portfolios):
     for n2 in minList:
       answer = max(answer, n1 ^ n2)
   return answer          
+
+print(question01([i for i in range(20)]))
