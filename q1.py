@@ -4,47 +4,61 @@
 def question01(portfolios):
   # modify and then return the variable below
   answer = 0
-  l = list(portfolios)
-
+  l = sorted(portfolios, reverse = True)
   if (len(l) < 2 or max(l) == 0):
     return answer
 
   if min(l) == max(l):
     return answer
-
-  bitFort = sum([1 for i in range(16) if max(l) - 2**i >= 0]) - 1
-  maxList, minList = splitTab(l, bitFort)
-
-  while minList == [] and max(maxList) != 0:
-    newMaxList = [maxList[i] - 2**bitFort for i in range(len(maxList))]
-    bitFort -= 1
-    maxList, minList = splitTab(newMaxList, bitFort)
-  if maxList == [] and minList == []:
-    return answer
   
-  answer = max([maxList[i] ^ minList[j] for i in range(len(maxList)) for j in range(len(minList))])
+  bitFort = bitPoidsFort(l)
+  n = bitFort
+  ind = 0
+  while(bitFort != 0):
+    j = swapping(ind, l[ind:], bitFort)
+    if (j == -1):
+      bitFort -= 1
+    else:
+      if (j != ind):
+        tmp = l[j]
+        l[j] = l[ind]
+        l[ind] = tmp
+      l = xoring(ind, l, bitFort)
+      bitFort -= 1
+      ind += 1
+  return xor_result(l, n)
+
+def swapping(indDeb, tab, bitFort):
+  for i in range(indDeb, len(tab)):
+    if tab[i] >= 2**bitFort:
+      return i
+  return -1
+
+def xoring(ind, tab, bitFort):
+  for i in range(len(tab)):
+    if (i != ind):
+      t1 = [int(i) for i in bin(tab[i])[2:]]
+      t = [0 for i in range(16 - len(t1))] + t1
+      if (t[15-bitFort] == 1):
+        tab[i] = tab[i] ^ tab[ind]      
+  return tab
+
+def xor_result(tab, n):
+  result = tab[0]
+  for i in range(1, len(tab)):
+    result = result ^ tab[i]
+  return result
+
+def bitPoidsFort(tab):
+  return sum([1 for i in range(16) if max(tab) - 2**i >= 0])-1
+
+def question01bis(portfolios):
+  # modify and then return the variable below
+  answer = 0
+  if len(portfolios) < 2 or max(portfolios) == 0:
+    return answer
+  answer = max([portfolios[i] ^ portfolios[j] for i in range(len(portfolios)-1) for j in range(i+1, len(portfolios))])
   return answer
 
-def splitTab(tab, bitFort):
-  maxList, minList = [],[]
-  tri = sorted(tab, reverse = True)
-  t = True
-  while(t):
-    if (len(tri) > 0):
-      if (tri[0] - 2**bitFort >= 0):
-        maxList += [tri[0]]
-        tri = tri[1:]
-      else:
-        t = False
-    else:
-      t = False
-  minList = tri
-  return maxList, minList
-
-# def question01(portfolios):
-#   # modify and then return the variable below
-#   answer = 0
-#   if len(portfolios) < 2 or max(portfolios) == 0:
-#     return answer
-#   answer = max([portfolios[i] ^ portfolios[j] for i in range(len(portfolios)-1) for j in range(i+1, len(portfolios))])
-#   return answer
+print(question01([i for i in range(1000)]))
+print(question01bis([i for i in range(1000)]))
