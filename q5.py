@@ -22,7 +22,9 @@ def question05(allowedAllocations, totalValue):
   return answer
 
 def checkModulo(n, tab):
-  for i in tab:
+  for i in range(len(tab)):
+    if (tab[i] == 0):
+      return -1
     if (n//i > 5):
       return -1
     if (n%i == 0):
