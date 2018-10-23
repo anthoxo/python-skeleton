@@ -25,8 +25,8 @@ def checkModulo(n, tab):
   for i in range(len(tab)):
     if (tab[i] == 0):
       return -1
-    if (n//i > 5):
+    if (n//tab[i] > 5):
       return -1
-    if (n%i == 0):
+    if (n%tab[i] == 0):
       return i
   return -1
