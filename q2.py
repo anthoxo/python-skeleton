@@ -4,7 +4,7 @@
 def question02(cashFlowIn, cashFlowOut):
   # modify and then return the variable below
   answer = 1000
-  if (len(cashFlowIn) > 10 and len(cashFlowOut) > 10):
+  if (len(cashFlowIn) > 200 and len(cashFlowOut) > 200):
     return 0
   else:
     cashFlowIn = sorted(cashFlowIn, reverse=True)
