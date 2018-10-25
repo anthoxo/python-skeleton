@@ -1,5 +1,4 @@
 # # ONLY EDIT FUNCTIONS MARKED CLEARLY FOR EDITING
-import cProfile
 
 class BinaryTree:
   left = None
@@ -82,7 +81,7 @@ def question01(portfolios):
   # modify and then return the variable below
   answer = 0
   tree = BinaryTree()
-  tabIter = [Number(portfolios[i]) for i in range(len(portfolios))]
+  tabIter = [Number(int(portfolios[i])) for i in range(len(portfolios))]
 
   for i in range(len(tabIter)):
     tmp = tabIter[i]
