@@ -39,15 +39,19 @@ class BinaryTree:
       return []
     else:
       if (number[0] == 0):
-        if (self.right == None):
+        if (self.right != None):
+          return [1] + self.right.maxXor(number[1:])
+        elif (self.left != None):
           return [0] + self.left.maxXor(number[1:])
         else:
-          return [1] + self.right.maxXor(number[1:])
+          return []
       else:
-        if (self.left == None):
+        if (self.left != None):
+          return [1] + self.left.maxXor(number[1:])
+        elif (self.right != None):
           return [0] + self.right.maxXor(number[1:])
         else:
-          return [1] + self.left.maxXor(number[1:])
+          return []
   
 class Number:
   n = 0
