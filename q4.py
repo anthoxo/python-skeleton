@@ -2,9 +2,10 @@
 
 #compute all combinations for two portfolios
 def question04(rows, numberMachines):
-  result = []
+  result = -1
   for tab in rows:
     for i in range(0, len(tab)-int(numberMachines)):
       if ('X' not in tab[i:i+int(numberMachines)]):
-        result += [sum(tab[i:i+int(numberMachines)])]
-  return 0 if result == [] else min(result)
+        t = sum(tab[i:i+int(numberMachines)])
+        result = t if result == -1 else min(result, t)
+  return 0 if result == -1 else result
